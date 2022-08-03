@@ -54,11 +54,13 @@ def create_folder(drive_service):
 
 def create_folder_in_folder(drive_service, folder_name, parent_folder_id):
     folder_id = parent_folder_id
+
     file_metadata = {
         'name': folder_name,
-        'parents': [folder_id],
         'mimeType': 'application/vnd.google-apps.folder'
     }
+    if folder_id:
+        file_metadata['parents'] = folder_id
 
     file = drive_service.files().create(body=file_metadata,
                                         fields='id').execute()
@@ -86,7 +88,7 @@ def upload_file(drive_service, file_path, file_name, mime_type, parent_id):
     # media = MediaFileUpload(file_path)
 
     # with open(file_path, 'rb') as FID:
-    #     fileInMemory = FID.read()
+    #     file_path = FID.read()
     file_path.seek(0)
     media = MediaIoBaseUpload(io.BytesIO(file_path.read()), mimetype=mime_type)
     # pylint: disable=maybe-no-member
