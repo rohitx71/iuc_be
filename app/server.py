@@ -1,28 +1,34 @@
 from flask import Flask, request, jsonify, abort
 from app.parse_data import parse
 import traceback
+from flask_cors import CORS, cross_origin
+
 app = Flask(__name__)
+cors = CORS(app)
 
 
 @app.route("/submit_data", methods=['POST'])
+@cross_origin()
 def post_data():
     try:
-        # request.form.get('first_name', "")
-        # if not (request.form['theme'] or
-        #         request.form['affiliation'] or
-        #         request.form['first_name'] or
-        #         request.form['last_name'] or
-        #         request.form['email'] or
-        #         request.form['phone_number'] or
-        #         request.form['university'] or
-        #         request.form['street_address'] or
-        #         request.form['city'] or
-        #         request.form['state'] or
-        #         request.form['country'] or
-        #         request.form['zip_code']):
-        #     return jsonify({'success': False, 'error': "Missing Parameters"}), 400
-        print(request.form)
+
+        if not ('theme' in request.form and
+                'title' in request.form and
+                'affiliation' in request.form and
+                'first_name' in request.form and
+                'last_name' in request.form and
+                'email' in request.form and
+                'phone_number' in request.form and
+                'university' in request.form and
+                'street_address' in request.form and
+                'city' in request.form and
+                'state' in request.form and
+                'country' in request.form and
+                'zip_code' in request.form):
+            print(request.form)
+            return jsonify({'success': False, 'error': "Missing Parameters"}), 400
         parse(theme=request.form['theme'],
+              title=request.form['title'],
               affiliation=request.form['affiliation'],
               first_name=request.form['first_name'],
               last_name=request.form['last_name'],
@@ -44,7 +50,6 @@ def post_data():
         print(traceback.format_exc())
         # print(e)
         return str(e), 500
-
 
 
 if __name__ == "__main__":

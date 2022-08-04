@@ -73,6 +73,7 @@ def iterate_folders_recursively(drive_service, folder):
     # folder = "iuc_website_test/2022/Event_name/Submissions/Rohit Singh-ropsingh@iu.edu"
     folder_list = folder.split("/")
     parent_id = None
+
     for current_folder in folder_list:
         current_parent_id = get_folder_id(drive_service, current_folder, parent_id)
         if not current_parent_id:
@@ -96,6 +97,7 @@ def upload_file(drive_service, file_path, file_name, mime_type, parent_id):
                                   fields='id').execute()
     print(F'File ID: {file.get("id")}')
     return True
+
 
 if __name__ == '__main__':
     try:

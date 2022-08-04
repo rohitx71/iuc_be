@@ -12,7 +12,7 @@ def upload_to_s3(file_path, file_name):
         io.BytesIO(file_path.read()),
         'iuc-website-abstracts-fall-pts-2022',
         file_name,
-        ExtraArgs={'ACL': 'public-read'})
+        ExtraArgs={'ACL': 'public-read', 'ContentType': "application/pdf"})
     return "https://iuc-website-abstracts-fall-pts-2022.s3.us-east-2.amazonaws.com/" + file_name
 
 

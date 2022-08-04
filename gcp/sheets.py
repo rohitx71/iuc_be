@@ -18,6 +18,30 @@ def append_values(service, values):
     # [START_EXCLUDE silent]
     # values = _values
     # [END_EXCLUDE]
+    rowcount =23
+    try:
+        result = service.spreadsheets().values().get(
+            spreadsheetId=SAMPLE_SPREADSHEET_ID, range="Total!A1").execute()
+        rowcount = int(result.get('values', [])[0][0])
+        values[0] = rowcount
+
+        insert = [
+            [
+                rowcount+1,
+            ],
+            # Additional rows ...
+        ]
+        body = {
+            'values': insert
+        }
+        result = service.spreadsheets().values().update(
+            spreadsheetId=SAMPLE_SPREADSHEET_ID, range="Total!A1",
+            valueInputOption="RAW", body=body).execute()
+
+    except Exception as e:
+        print("Sheet Total")
+        print(e)
+
     body = {
         'values': [values]
     }
@@ -28,7 +52,8 @@ def append_values(service, values):
                                        .get('updates')
                                        .get('updatedCells')))
     # [END sheets_append_values]
-    return result
+    return rowcount
+
 
 if __name__ == "__main__":
     append_values()
