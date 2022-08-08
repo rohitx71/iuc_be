@@ -36,7 +36,7 @@ def send_dynamic_email(email, date, id, title, theme, name, phone, secondary_aut
     message.template_id = TEMPLATE_ID
     # create our sendgrid client object, pass it our key, then send and return our response objects
     try:
-        sg = SendGridAPIClient("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")
+        sg = SendGridAPIClient("")
         response = sg.send(message)
         code, body, headers = response.status_code, response.body, response.headers
         print(f"Response code: {code}")
