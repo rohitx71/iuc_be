@@ -5,3 +5,4 @@ PyVimeo
 flask
 boto3
 flask-cors
+sendgrid

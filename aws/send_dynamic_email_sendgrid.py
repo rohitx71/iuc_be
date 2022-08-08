@@ -3,7 +3,7 @@ from sendgrid.helpers.mail import Mail
 from sendgrid import SendGridAPIClient
 
 # from address we pass to our Mail object, edit with your name
-FROM_EMAIL = 'iuc@iu.edu'
+FROM_EMAIL = ('iuc@iu.edu', "Indiana University Conferences")
 
 # update to your dynamic template id from the UI
 TEMPLATE_ID = 'd-dec40c9d6b324aa7b248ee63fef787e2'
@@ -36,17 +36,18 @@ def send_dynamic_email(email, date, id, title, theme, name, phone, secondary_aut
     message.template_id = TEMPLATE_ID
     # create our sendgrid client object, pass it our key, then send and return our response objects
     try:
-        sg = SendGridAPIClient("")
+        sg = SendGridAPIClient("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")
         response = sg.send(message)
         code, body, headers = response.status_code, response.body, response.headers
         print(f"Response code: {code}")
         print(f"Response headers: {headers}")
         print(f"Response body: {body}")
         print("Dynamic Messages Sent!")
+        return "Success"
     except Exception as e:
         print("Error: {0}".format(e))
-    return str(response.status_code)
+        return str("Failed to send Email")
 
 
-# if __name__ == "__main__":
-#     SendDynamic()
+if __name__ == "__main__":
+    send_dynamic_email("ropsingh@iu.edu", 3,4,5,6,7,8,9)

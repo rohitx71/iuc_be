@@ -1,6 +1,7 @@
 
 import boto3
 # s3_client = boto3.client('s3')
+
 def upload_to_s3(file_path, file_name):
     s3_resource = boto3.resource('s3')
 
@@ -8,11 +9,14 @@ def upload_to_s3(file_path, file_name):
     #     file_path = FID
     file_path.seek(0)
     import io
+    dict = {'ACL': 'public-read'}
+    if ".pdf" in file_name:
+        dict['ContentType']="application/pdf"
     respo=s3_resource.meta.client.upload_fileobj(
         io.BytesIO(file_path.read()),
         'iuc-website-abstracts-fall-pts-2022',
         file_name,
-        ExtraArgs={'ACL': 'public-read', 'ContentType': "application/pdf"})
+        ExtraArgs=dict)
     return "https://iuc-website-abstracts-fall-pts-2022.s3.us-east-2.amazonaws.com/" + file_name
 
 

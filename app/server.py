@@ -11,7 +11,7 @@ cors = CORS(app)
 @cross_origin()
 def post_data():
     try:
-
+        print(request.form)
         if not ('theme' in request.form and
                 'title' in request.form and
                 'affiliation' in request.form and
@@ -44,6 +44,8 @@ def post_data():
               abstract=request.files.get('abstract', None),
               file_name=request.files['abstract'].filename if request.files.get('abstract', None) else None,
               mime_type=request.files['abstract'].mimetype if request.files.get('abstract', None) else None,
+              is_travel_grant_needed=request.files['is_travel_grant_needed'] if request.files.get('is_travel_grant_needed', None) else False,
+              travel_grant_cost=request.files['travel_grant_cost'] if request.files.get('travel_grant_cost', None) else 0,
               )
         return jsonify({'success': True}), 200
     except Exception as e:
@@ -53,4 +55,6 @@ def post_data():
 
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=5001)
+    # app.run(host='0.0.0.0', port=5001)
+    context = ('/etc/letsencrypt/live/servertestabctestserver.tk/fullchain.pem', '/etc/letsencrypt/live/servertestabctestserver.tk/privkey.pem')
+    app.run(host='0.0.0.0', port=5001, ssl_context=context)

@@ -5,7 +5,7 @@ from aws.send_dynamic_email_sendgrid import send_dynamic_email
 
 
 def parse(theme, affiliation, first_name, last_name, email, phone_number, university, street_address, city, state,
-          country, zip_code, secondary_authors, abstract, file_name, mime_type, title):
+          country, zip_code, secondary_authors, abstract, file_name, mime_type, title, is_travel_grant_needed, travel_grant_cost):
 
     # create folders in drive
 
@@ -20,7 +20,7 @@ def parse(theme, affiliation, first_name, last_name, email, phone_number, univer
 
     is_abstract_uploaded = True if abstract else "Abstract not uploaded"
     final_data = [0, current_time, is_abstract_uploaded, theme, affiliation, first_name, last_name, email, phone_number,
-                  university, street_address, city, state, country, zip_code]
+                  university, street_address, city, state, country, zip_code, is_travel_grant_needed, travel_grant_cost]
 
     # deserialize secondary_authors
     secondary_authors = json.loads(secondary_authors)
